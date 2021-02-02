@@ -40,8 +40,13 @@
             @foreach (var item in Model)
             {
                 <div class="col-4 my-2">
+<<<<<<< HEAD
                     <div class="card h-100 ">
                         <img src="@item.ImagePath"  class="card-img-top img-thumbnail img-rounded" alt="Electronics">
+=======
+                    <div class="card h-100">
+                        <img src="@item.ImagePath" class="card-img-top img-fluid" alt="Electronics" style="height: 30vh; object-fit:cover;">
+>>>>>>> 7786b539854cdc12ca562767d6406c1f556436de
                         <div class="card-body">
                             <h5 class="card-title">
                                 @Html.DisplayFor(modelItem => item.ProductName)
