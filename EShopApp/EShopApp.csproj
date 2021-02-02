@@ -356,6 +356,9 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\contact.css" />
+    <Content Include="css\login.css" />
+    <Content Include="css\register.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
