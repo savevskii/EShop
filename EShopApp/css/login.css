@@ -1,0 +1,27 @@
+body > div {
+    color: whitesmoke;
+    background: #343a40;
+}
+    body > div > h2{
+        font-size: 60px;
+    }
+label{
+    font-size:25px;
+
+}
+#loginForm > form > div:nth-child(7) > div > input {
+    color: whitesmoke;
+    font-size: 35px;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-weight:bolder;
+    border: 2.5px solid whitesmoke;
+}
+#loginForm > form > p > a{
+    color: whitesmoke;
+    font-size: 18px;
+    padding-left:10px;
+
+}
