@@ -16,6 +16,9 @@
     <thead>
         <tr>
             <th>
+                Image
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Category.CategoryName)
             </th>
             <th>
@@ -24,13 +27,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
-            <th></th>
+            <th style="min-width:100px"></th>
         </tr>
     </thead>
 
@@ -38,33 +39,41 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        <tr>
+            <td>
+                <img src="@item.ImagePath" style="max-width:200px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink(item.ProductName, "Details", "Products", new { id = item.ProductID }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+
+            <td>
+                <button type="button"class="btn btn-block btn-outline-info">
+                    @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = item.ProductID }, "")
+                </button>
+           
+            @if (User.IsInRole("Administrator"))
+            {
+               <br />
+                 @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })<br/>
+                  <button style="margin-left:0;" data-artist-id="@item.ProductID" class="btn  btn-link js-delete">Delete</button>
+              
+                
+
+            }
+            
                 </td>
-                <td>
-                    @Html.ActionLink(item.ProductName, "Details", "Products", new { id = item.ProductID }, null)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <img src="@item.ImagePath" style="max-width:200px" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitPrice)
-                </td>
-                <td>
-                    <button class="btn btn-outline-info">
-                        @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = item.ProductID }, "")
-                    </button>
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        @Html.ActionLink("Edit | ", "Edit", new { id = item.ProductID })
-                        <button data-artist-id="@item.ProductID" class="btn btn-link js-delete">Delete</button>
-                    }
-                </td>
-            </tr>
+        </tr>
         }
     </tbody>
 
