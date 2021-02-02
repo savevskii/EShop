@@ -41,7 +41,7 @@
             {
                 <div class="col-4 my-2">
                     <div class="card h-100">
-                        <img src="@item.ImagePath" class="card-img-top img-thumbnail img-rounded" alt="Electronics">
+                        <img src="@item.ImagePath" class="card-img-top img-fluid" alt="Electronics" style="height: 30vh; object-fit:cover;">
                         <div class="card-body">
                             <h5 class="card-title">
                                 @Html.DisplayFor(modelItem => item.ProductName)
