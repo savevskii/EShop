@@ -55,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.UnitPrice)
                 </td>
                 <td>
-                    <button class="btn btn-outline-info">
+                    <button class="btn btn-outline-info btn-block">
                         @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = item.ProductID }, "")
                     </button>
                     @if (User.IsInRole("Administrator"))
