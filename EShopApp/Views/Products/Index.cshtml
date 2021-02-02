@@ -1,0 +1,90 @@
+﻿@model IEnumerable<EShopApp.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (User.IsInRole("Administrator"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+<table id="productsTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                    @Html.ActionLink(item.ProductName, "Details", "Products", new { id = item.ProductID }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <img src="@item.ImagePath" style="max-width:200px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    <button class="btn btn-outline-info">
+                        @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = item.ProductID }, "")
+                    </button>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Edit | ", "Edit", new { id = item.ProductID })
+                        <button data-artist-id="@item.ProductID" class="btn btn-link js-delete">Delete</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#productsTable').DataTable({
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [0, 1]
+                }, {
+                    targets: [1],
+                    orderData: [1, 0]
+                }, {
+                    targets: [5],
+                    orderData: [5, 0]
+                }]
+            });
+        });
+    </script>
+}

@@ -1,0 +1,100 @@
+﻿@model EShopApp.ViewModels.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+
+<h3>
+    <em>Review</em> your cart:
+</h3>
+<div id="update-message">
+</div>
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Available</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-right">Price</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <tr id="row-@item.ItemId">
+                                <td>
+                                    @Html.ActionLink(item.Product.ProductName, "Details", "Products", new { id = item.ProductId }, null)
+                                </td>
+                                <td>In stock</td>
+                                <td id="item-count-@item.ItemId" class="text-center">
+                                    @item.Quantity
+                                </td>
+                                <td class="text-right">
+                                    @item.Product.UnitPrice €
+                                </td>
+                                <td class="text-right">
+                                    <button class="btn btn-sm btn-danger" id="btnRemove" data-id="@item.ItemId">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td class="text-right" id="cart-total"><strong>@Model.CartTotal €</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <button class="btn btn-block btn-light">
+                        @Html.ActionLink("Continue Shopping", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "text-dark" })
+                    </button>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <button class="btn btn-lg btn-block btn-success text-uppercase">
+                        @Html.ActionLink("Checkout", "AddressAndPayment", "Checkout", routeValues: null, htmlAttributes: new { @class = "text-white" })
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            // Document.ready -> link up remove event handler
+            $("#btnRemove").click(function () {
+                // Get the id from the link
+                var recordToDelete = $(this).attr("data-id");
+                if (recordToDelete != '') {
+                    // Perform the ajax post
+                    $.post("/ShoppingCart/RemoveFromCart", { "id": recordToDelete },
+                        function (data) {
+                            // Successful requests get here
+                            // Update the page elements
+                            if (data.ItemCount == 0) {
+                                $('#row-' + data.DeleteId).fadeOut('slow');
+                            } else {
+                                $('#item-count-' + data.DeleteId).text(data.ItemCount);
+                            }
+                            $('#cart-total').text(data.CartTotal);
+                            $('#update-message').text(data.Message);
+                            $('#cart-status').text('Cart (' + data.CartCount + ')');
+                        });
+                }
+            });
+        });
+    </script>
+}

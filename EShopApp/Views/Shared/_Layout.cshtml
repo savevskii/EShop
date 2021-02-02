@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Category
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @Html.ActionLink("Laptops", "Index", "Products", new { id = 1 }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("TV & Video", "Index", "Products", new { id = 2 }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Mobile Phones", "Index", "Products", new { id = 3 }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Photography & Videography", "Index", "Products", new { id = 4 }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Headphones", "Index", "Products", new { id = 5 }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("All Products", "Index", "Products", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Contact", "Contact", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link" })
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content mt-3">
+        @RenderBody()
+        <hr />
+    </div>
+    <footer class="py-3 bg-dark">
+        <p class="text-center m-0 text-white">&copy; @DateTime.Now.Year - Electronics Shop</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
