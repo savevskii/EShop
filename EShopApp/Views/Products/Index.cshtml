@@ -58,20 +58,17 @@
             </td>
 
             <td>
-                <button type="button"class="btn btn-block btn-outline-info">
+                <button type="button" class="btn btn-block btn-outline-info">
                     @Html.ActionLink("Add to cart", "AddToCart", "ShoppingCart", new { id = item.ProductID }, "")
                 </button>
-           
-            @if (User.IsInRole("Administrator"))
-            {
-               <br />
-                 @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })<br/>
-                  <button style="margin-left:0;" data-artist-id="@item.ProductID" class="btn  btn-link js-delete">Delete</button>
-              
-                
 
-            }
-                </td>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <br />
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ProductID })<br />
+                    <button data-id="@item.ProductID" class="btn-link js-delete">Delete</button>
+                }
+            </td>
         </tr>
         }
     </tbody>
@@ -81,18 +78,22 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#productsTable').DataTable({
-                columnDefs: [{
-                    targets: [0],
-                    orderData: [0, 1]
-                }, {
-                    targets: [1],
-                    orderData: [1, 0]
-                }, {
-                    targets: [5],
-                    orderData: [5, 0]
-                }]
+            var table = $('#productsTable').DataTable();
+            $("#productsTable .js-delete").click(function () {
+                var button = $(this);
+                bootbox.confirm("Do you want to delete this product?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Products/Delete/" + button.attr("data-id"),
+                            method: "GET",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
             });
+
         });
     </script>
 }
